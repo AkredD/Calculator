@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         balanceBracket = 0;
         ExpressionR.setText(" ");
         Result.setText(" ");
+        //
     }
 
     public void onClearClick(View v) {
