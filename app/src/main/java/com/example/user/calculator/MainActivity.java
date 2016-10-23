@@ -14,12 +14,36 @@ public class MainActivity extends AppCompatActivity {
     public boolean checkBracket = true;
     public int balanceBracket = 0;
     public boolean checkPoint = true;
-
+    private static final String TEXTVIEW_STATE_KEY_E = "TEXTVIEW_STATE_KEY_E";
+    private static final String TEXTVIEW_STATE_KEY_R = "TEXTVIEW_STATE_KEY_R";
+    static final String STATE_EQV = "EQV";
+    static final String STATE_BRACKET = "BRACKET";
+    static final String STATE_POINT = "POINT";
+    static final String STATE_BALANCE = "BALANCE";
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onSaveInstanceState(Bundle saveInstanceState){
+        saveInstanceState.putString(TEXTVIEW_STATE_KEY_E, ExpressionR.getText().toString());
+        saveInstanceState.putString(TEXTVIEW_STATE_KEY_R, Result.getText().toString());
+        saveInstanceState.putBoolean(STATE_EQV, lastEqv);
+        saveInstanceState.putBoolean(STATE_BRACKET, checkBracket);
+        saveInstanceState.putBoolean(STATE_POINT, checkPoint);
+        saveInstanceState.putInt(STATE_BALANCE, balanceBracket);
+        super.onSaveInstanceState(saveInstanceState);
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        if (savedInstanceState != null){
+            ExpressionR.setText(savedInstanceState.getString(TEXTVIEW_STATE_KEY_E));
+            expression = ExpressionR.getText().toString();
+            Result.setText(savedInstanceState.getString(TEXTVIEW_STATE_KEY_R));
+            lastEqv = savedInstanceState.getBoolean(STATE_EQV);
+            checkBracket = savedInstanceState.getBoolean(STATE_BRACKET);
+            checkPoint = savedInstanceState.getBoolean(STATE_POINT);
+            balanceBracket = savedInstanceState.getInt(STATE_BALANCE);
+        }
     }
 
     private void init() {
